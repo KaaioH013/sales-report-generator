@@ -1,5 +1,5 @@
 @echo off
-:: Este script limpa, ativa o ambiente e constroi o programa (modo diretório).
+:: Este script limpa, cria/ativa um venv local e constrói o programa (modo diretório).
 
 echo.
 echo [PASSO 1 de 4] Limpando arquivos e pastas da versao anterior...
@@ -7,7 +7,6 @@ echo [PASSO 1 de 4] Limpando arquivos e pastas da versao anterior...
 :: Apaga a pasta 'dist' se ela existir, em modo silencioso.
 IF EXIST dist rd /s /q dist
 IF EXIST build rd /s /q build
-IF EXIST gerar_relatorio.spec del gerar_relatorio.spec
 
 echo Limpeza concluida!
 echo.
@@ -22,13 +21,24 @@ IF NOT EXIST "mapa_brasil_dados.pkl" (
 )
 echo Dados do mapa simplificado encontrados!
 echo.
-echo [PASSO 3 de 4] Ativando ambiente virtual e construindo o programa (modo diretorio)...
+echo [PASSO 3 de 4] Criando/ativando venv e instalando dependencias...
 
-:: Ativa o ambiente virtual e executa o PyInstaller com a flag --onedir para inicializacao rapida
-call venv_stable\Scripts\activate.bat && pyinstaller --windowed --onedir --add-data "template.html;." --add-data "template_comparativo.html;." --add-data "template_anual.html;." --add-data "template_comparativo_anual.html;." --add-data "Logo.png;." --add-data "mapa_brasil_dados.pkl;." --splash "splash.png" gerar_relatorio.py
+IF NOT EXIST ".venv\Scripts\python.exe" (
+    echo Criando ambiente virtual em .venv...
+    py -3 -m venv .venv
+)
+
+call .venv\Scripts\activate.bat
+python -m pip install --upgrade pip
+pip install -r requirements-dev.txt
 
 echo.
-echo [PASSO 4 de 4] Processo finalizado!
+echo [PASSO 4 de 4] Construindo o EXE com PyInstaller (spec)...
+
+pyinstaller --clean gerar_relatorio.spec
+
+echo.
+echo Processo finalizado!
 echo O novo programa esta na pasta 'dist\gerar_relatorio'.
 echo Para distribuir, compacte a pasta 'gerar_relatorio' em um arquivo .zip.
 echo.
