@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório de Análise Anual</title>
+    <style>
+        @page { size: A4; margin: 2cm; }
+        body { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; font-size: 11px; }
+        .header { text-align: center; margin-bottom: 25px; }
+        .header img { max-height: 70px; }
+        .header h1 { margin-top: 10px; font-size: 22px; color: #2c3e50; }
+        h2 { 
+            font-size: 18px; 
+            color: #2980b9; 
+            border-bottom: 2px solid #3498db; 
+            padding-bottom: 5px; 
+            margin-top: 30px; 
+            page-break-after: avoid; /* Evita que o título fique órfão no final da página */
+        }
+        h3 { font-size: 14px; color: #34495e; margin-top: 20px; }
+        .summary-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .summary-table td { border: 1px solid #dddddd; text-align: left; padding: 8px; }
+        .summary-table td:first-child { font-weight: bold; width: 40%; }
+        .chart { width: 100%; margin-top: 15px; page-break-inside: avoid; }
+        .new-page { page-break-before: always; }
+        .footer { text-align: center; position: fixed; bottom: -40px; left: 0px; right: 0px; height: 50px; font-size: 10px; color: #95a5a6; }
+    </style>
+</head>
+<body>
+    <div class="footer">
+        Relatório gerado em {{DATA_GERACAO}}
+    </div>
+
+    <div class="header">
+        <img src="{{CAMINHO_LOGO}}" alt="Logo da Empresa">
+        <h1>Relatório de Análise Anual de Vendas</h1>
+    </div>
+
+    <h2>Resumo dos Indicadores Chave (KPIs)</h2>
+    <table class="summary-table">
+        <tr>
+            <td>Venda Total no Ano</td>
+            <td>{{VENDA_TOTAL_ANUAL}}</td>
+        </tr>
+        <tr>
+            <td>Número Total de Pedidos</td>
+            <td>{{NUM_PEDIDOS_ANUAL}}</td>
+        </tr>
+        <tr>
+            <td>Ticket Médio</td>
+            <td>{{TICKET_MEDIO_ANUAL}}</td>
+        </tr>
+        <tr>
+            <td>Unidades Vendidas</td>
+            <td>{{UNIDADES_VENDIDAS_ANUAL}}</td>
+        </tr>
+    </table>
+
+    <div>
+        <h2>Evolução das Vendas ao Longo do Ano</h2>
+        <img src="{{GRAFICO_EVOLUCAO_MENSAL_PATH}}" alt="Evolução Mensal de Vendas" class="chart">
+        <img src="{{GRAFICO_VENDAS_TRIMESTRAL_PATH}}" alt="Distribuição Trimestral de Vendas" class="chart">
+    </div>
+
+    <div class="new-page">
+        <h2>Rankings Anuais</h2>
+        <h3>Top 10 Produtos do Ano (por Valor de Venda)</h3>
+        <img src="{{GRAFICO_TOP_PRODUTOS_PATH}}" alt="Top 10 Produtos por Valor" class="chart">
+        <h3>Top 10 Produtos do Ano (por Quantidade Vendida)</h3>
+        <img src="{{GRAFICO_TOP_PRODUTOS_QTD_ANUAL_PATH}}" alt="Top 10 Produtos por Quantidade" class="chart">
+    </div>
+
+    <div class="new-page">
+        <h3>Top 10 Clientes do Ano (por Valor de Compra)</h3>
+        <img src="{{GRAFICO_TOP_CLIENTES_PATH}}" alt="Top 10 Clientes" class="chart">
+    </div>
+
+</body>
+</html>

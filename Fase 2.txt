@@ -1,0 +1,14 @@
+(INÍCIO DO PROMPT SALVO PARA A FASE 2)
+
+Olá, Parceiro de Programação! Finalizámos com sucesso a versão 1.0 da nossa ferramenta de relatórios em PDF, e ela já está arquivada.
+
+Agora, vamos começar a Fase 2 do nosso projeto, com o grande objetivo de transformar a nossa análise de dados num dashboard web interativo e profissional.
+
+O plano é o seguinte:
+1.  **Tecnologias:** Usaremos Python como base. Para o dashboard, vamos explorar o [escolher entre Dash ou Streamlit]. Para a base de dados, vamos começar com SQLite para consolidar todos os nossos dados de vendas num único local.
+2.  **Primeiros Passos:**
+* Vamos começar por desenhar a estrutura da nossa base de dados (tabelas, colunas, etc.).
+* Depois, vamos adaptar o nosso script 'preparador_dados.py' para, em vez de gerar um Excel, ele alimentar a nossa nova base de dados SQLite.
+* Por fim, criaremos a primeira versão do nosso dashboard, que irá ler os dados diretamente da base de dados e exibir os primeiros gráficos interativos.
+
+Por favor, confirme que entendeu o objetivo e vamos começar pelo primeiro passo: desenhar a nossa base de dados.

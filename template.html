@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>{{TITULO_RELATORIO}}</title>
+    <style>
+        @page { size: A4; margin: 1.5cm; }
+        body { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; font-size: 10px; }
+        .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
+        .header img { max-height: 60px; }
+        .header h1 { margin-top: 5px; font-size: 20px; color: #2c3e50; }
+        h2 { font-size: 16px; color: #2980b9; border-bottom: 1px solid #3498db; padding-bottom: 3px; margin-top: 25px; }
+        h3 { font-size: 14px; color: #34495e; margin-top: 20px; margin-bottom: 5px; }
+        .summary-box { background-color: #ecf0f1; border-radius: 5px; padding: 15px; text-align: center; margin-bottom: 20px; display: flex; justify-content: space-around; }
+        .kpi { display: inline-block; margin: 0 15px; }
+        .kpi-title { font-size: 11px; color: #7f8c8d; }
+        .kpi-value { font-size: 18px; font-weight: bold; color: #2c3e50; }
+        .content-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .content-table th, .content-table td { border: 1px solid #dddddd; text-align: left; padding: 6px; }
+        .content-table th { background-color: #f2f2f2; }
+        .chart { width: 100%; margin-top: 10px; page-break-inside: avoid; }
+        .new-page { page-break-before: always; }
+        .footer { text-align: center; position: fixed; bottom: -30px; left: 0px; right: 0px; height: 50px; font-size: 9px; color: #95a5a6; }
+        /* NOVO ESTILO ADICIONADO */
+        .summary-text { font-style: italic; text-align: center; margin-bottom: 15px; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <div class="footer">
+        Relatório gerado em {{DATA_GERACAO}}
+    </div>
+
+    <div class="header">
+        <img src="{{CAMINHO_LOGO}}" alt="Logo da Empresa">
+        <h1>{{TITULO_RELATORIO}}</h1>
+    </div>
+
+    <h2>Resumo Geral do Período</h2>
+    <div class="summary-box">
+        <div class="kpi">
+            <div class="kpi-title">VALOR TOTAL DE VENDAS</div>
+            <div class="kpi-value">{{VALOR_TOTAL_VENDAS}}</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-title">NÚMERO DE PEDIDOS</div>
+            <div class="kpi-value">{{NUMERO_PEDIDOS}}</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-title">TICKET MÉDIO</div>
+            <div class="kpi-value">{{TICKET_MEDIO}}</div>
+        </div>
+    </div>
+
+    <h2>Análise de Vendas</h2>
+    <h3>Evolução das Vendas no Período</h3>
+    <img src="{{GRAFICO_VENDAS_TEMPO_PATH}}" alt="Evolução das Vendas" class="chart">
+
+    <div class="new-page">
+        <h2>Análise de Vendedores</h2>
+        <h3>Desempenho por Vendedor</h3>
+        <img src="{{GRAFICO_VENDEDOR_PATH}}" alt="Vendas por Vendedor" class="chart">
+
+        <h3>Tabela de Desempenho Detalhada</h3>
+        <table class="content-table">
+            <thead>
+                <tr>
+                    <th>Vendedor</th>
+                    <th style="text-align:right;">Valor Total Vendido</th>
+                    <th style="text-align:center;">Nº de Pedidos</th>
+                    <th style="text-align:right;">Ticket Médio</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{TABELA_VENDEDORES}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="new-page">
+        <h2>Análise de Clientes</h2>
+        <h3>Análise de Pareto por Cliente (Top 30)</h3>
+        <p class="summary-text">{{TEXTO_RESUMO_PARETO}}</p>
+        <img src="{{GRAFICO_PARETO_CLIENTE_PATH}}" alt="Análise de Pareto por Cliente" class="chart">
+        
+        <h3>Top 10 Clientes por Valor de Compra</h3>
+        <img src="{{GRAFICO_CLIENTES_PATH}}" alt="Top 10 Clientes" class="chart">
+    </div>
+
+    <div class="new-page">
+        <h2>Análise de Produtos</h2>
+        <h3>Top 10 Produtos por Valor de Venda (R$)</h3>
+        <img src="{{GRAFICO_PRODUTOS_VALOR_PATH}}" alt="Top 10 Produtos por Valor" class="chart">
+
+        <h3>Top 10 Produtos por Quantidade Vendida (Unidades)</h3>
+        <img src="{{GRAFICO_PRODUTOS_QTD_PATH}}" alt="Top 10 Produtos por Quantidade" class="chart">
+    </div>
+
+    {{SECAO_MAPA_CALOR}}
+    
+    <div class="new-page">
+        <h2>Análise Geográfica Detalhada</h2>
+        <h3>Distribuição Percentual de Vendas por Estado</h3>
+        <img src="{{GRAFICO_PIZZA_ESTADO_PATH}}" alt="Distribuição de Vendas por Estado" class="chart">
+        <p>A categoria "Outros" (se houver) representa <strong>{{PERCENTUAL_OUTROS}}%</strong> do total e inclui os seguintes estados: {{LISTA_ESTADOS_OUTROS}}.</p>
+        
+        <h3>Detalhamento de Vendas - Outros Estados</h3>
+        {{GRAFICO_OUTROS_ESTADOS_HTML}}
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+venv_stable/
+
+# PyInstaller
+build/
+dist/
+*.spec.bak
+
+# OS / Editor
+.DS_Store
+desktop.ini
+.vscode/
+
+# Logs
+*.log
+crash_log.txt
+
+# Dados e saídas (não versionar)
+*.xlsx
+*.xls
+*.csv
+*.pdf
+relatorio_qualidade_dados_*.txt
+
+# Gráficos gerados
+/grafico_*.png
+
+# Mantém assets do projeto
+!Logo.png
+!splash.png
+
+# Cache/artefatos
+mapa_brasil_dados.pkl.lock
+~$*.xlsx

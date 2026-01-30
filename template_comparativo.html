@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>{{TITULO_RELATORIO}}</title>
+    <style>
+        @page { size: A4; margin: 2cm; }
+        body { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; font-size: 11px; }
+        .header { text-align: center; margin-bottom: 25px; }
+        .header img { max-height: 70px; }
+        .header h1 { margin-top: 10px; font-size: 22px; color: #2c3e50; }
+        h2 { font-size: 18px; color: #2980b9; border-bottom: 2px solid #3498db; padding-bottom: 5px; margin-top: 30px; }
+        .summary-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .summary-table th, .summary-table td { border: 1px solid #dddddd; text-align: center; padding: 10px; }
+        .summary-table th { background-color: #ecf0f1; color: #34495e; }
+        .summary-table td:first-child { text-align: left; font-weight: bold; }
+        .positive { color: #27ae60; font-weight: bold; }
+        .negative { color: #c0392b; font-weight: bold; }
+        .chart { width: 100%; margin-top: 15px; page-break-inside: avoid; }
+        .new-page { page-break-before: always; }
+        .footer { text-align: center; position: fixed; bottom: -40px; left: 0px; right: 0px; height: 50px; font-size: 10px; color: #95a5a6; }
+    </style>
+</head>
+<body>
+    <div class="footer">
+        Relatório gerado em {{DATA_GERACAO}}
+    </div>
+
+    <div class="header">
+        <img src="{{CAMINHO_LOGO}}" alt="Logo da Empresa">
+        <h1>{{TITULO_RELATORIO}}</h1>
+    </div>
+
+    <h2>Resumo Comparativo dos KPIs</h2>
+    <table class="summary-table">
+        <thead>
+            <tr>
+                <th>Indicador</th>
+                <th>Período A: {{LABEL_A}}</th>
+                <th>Período B: {{LABEL_B}}</th>
+                <th>Variação (B vs A)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Valor Total de Vendas</td>
+                <td>{{VALOR_TOTAL_A}}</td>
+                <td>{{VALOR_TOTAL_B}}</td>
+                <td class="{{COR_VARIACAO_VALOR}}">{{VARIACAO_VALOR}}</td>
+            </tr>
+            <tr>
+                <td>Número de Pedidos</td>
+                <td>{{NUM_PEDIDOS_A}}</td>
+                <td>{{NUM_PEDIDOS_B}}</td>
+                <td class="{{COR_VARIACAO_PEDIDOS}}">{{VARIACAO_PEDIDOS}}</td>
+            </tr>
+            <tr>
+                <td>Ticket Médio</td>
+                <td>{{TICKET_MEDIO_A}}</td>
+                <td>{{TICKET_MEDIO_B}}</td>
+                <td class="{{COR_VARIACAO_TICKET}}">{{VARIACAO_TICKET}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="new-page">
+        <h2>Análises Comparativas Gráficas</h2>
+        <h3>Comparativo de Vendas por Vendedor</h3>
+        <img src="{{GRAFICO_COMP_VENDEDOR_PATH}}" alt="Comparativo de Vendas por Vendedor" class="chart">
+    </div>
+
+    <div class="new-page">
+        <h3>Comparativo de Top 10 Produtos</h3>
+        <img src="{{GRAFICO_COMP_PRODUTO_PATH}}" alt="Comparativo de Top 10 Produtos" class="chart">
+    </div>
+    
+    <div class="new-page">
+        <h3>Comparativo de Top 10 Clientes</h3>
+        <img src="{{GRAFICO_COMP_CLIENTE_PATH}}" alt="Comparativo de Top 10 Clientes" class="chart">
+    </div>
+    
+    <div class="new-page">
+        <h2>Alerta de Clientes Inativos (Churn)</h2>
+        <p>Clientes que compraram em <strong>{{LABEL_A}}</strong> mas não compraram em <strong>{{LABEL_B}}</strong> (Top 15 por valor em A).</p>
+        <table class="summary-table">
+            <thead>
+                <tr>
+                    <th>Nome do Cliente</th>
+                    <th style='text-align:right;'>Valor Comprado em {{LABEL_A}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{TABELA_CHURN}}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
