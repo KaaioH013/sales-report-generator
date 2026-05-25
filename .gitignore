@@ -1,3 +1,5 @@
+# Backups locais
+/backups/
 # Python
 __pycache__/
 *.py[cod]

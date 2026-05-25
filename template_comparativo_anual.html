@@ -63,21 +63,67 @@
         </tbody>
     </table>
 
+    {% if INCLUDE_EVOLUCAO_MENSAL %}
     <div class="new-page">
         <h2>Análises Comparativas Anuais</h2>
         <h3>Comparativo de Vendas Mensais ({{ANO_A}} vs {{ANO_B}})</h3>
         <img src="{{GRAFICO_EVOLUCAO_MENSAL_COMP_PATH}}" alt="Comparativo de Vendas Mensais" class="chart">
     </div>
-    
+    {% endif %}
+
+    {% if INCLUDE_TABELA_YOY_MENSAL %}
     <div class="new-page">
-        <h3>Comparativo de Top 10 Produtos (Baseado no Ano {{ANO_B}})</h3>
+        <h2>Análises Comparativas Anuais</h2>
+        <h3>Tabela YoY por mês ({{ANO_A}} vs {{ANO_B}})</h3>
+        <table class="summary-table">
+            <thead>
+                <tr>
+                    <th>Mês</th>
+                    <th>{{ANO_A}}</th>
+                    <th>{{ANO_B}}</th>
+                    <th>Δ (R$)</th>
+                    <th>Δ (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{TABELA_YOY_MENSAL}}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+    
+    {% if INCLUDE_TOP_PRODUTOS %}
+    <div class="new-page">
+        <h3>Comparativo de Top 20 Produtos (Baseado no Ano {{ANO_B}})</h3>
         <img src="{{GRAFICO_TOP_PRODUTOS_COMP_PATH}}" alt="Comparativo de Top Produtos" class="chart">
     </div>
+    {% endif %}
 
+    {% if INCLUDE_TOP_CLIENTES %}
     <div class="new-page">
-        <h3>Comparativo de Top 10 Clientes (Baseado no Ano {{ANO_B}})</h3>
+        <h3>Comparativo de Top 20 Clientes (Baseado no Ano {{ANO_B}})</h3>
         <img src="{{GRAFICO_TOP_CLIENTES_COMP_PATH}}" alt="Comparativo de Top Clientes" class="chart">
     </div>
+    {% endif %}
+
+    {% if INCLUDE_CHURN %}
+    <div class="new-page">
+        <h2>Alerta de Clientes Inativos (Churn)</h2>
+        <p>Clientes que compraram em <strong>{{ANO_A}}</strong> mas não compraram em <strong>{{ANO_B}}</strong> (Top 15 por valor em {{ANO_A}}).</p>
+        {{RESUMO_CHURN}}
+        <table class="summary-table">
+            <thead>
+                <tr>
+                    <th>Nome do Cliente</th>
+                    <th style='text-align:right;'>Valor Comprado em {{ANO_A}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{TABELA_CHURN}}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
 
 </body>
 </html>

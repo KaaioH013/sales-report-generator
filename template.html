@@ -11,10 +11,11 @@
         .header h1 { margin-top: 5px; font-size: 20px; color: #2c3e50; }
         h2 { font-size: 16px; color: #2980b9; border-bottom: 1px solid #3498db; padding-bottom: 3px; margin-top: 25px; }
         h3 { font-size: 14px; color: #34495e; margin-top: 20px; margin-bottom: 5px; }
-        .summary-box { background-color: #ecf0f1; border-radius: 5px; padding: 15px; text-align: center; margin-bottom: 20px; display: flex; justify-content: space-around; }
+        .summary-box { background-color: #ecf0f1; border-radius: 5px; padding: 15px; text-align: center; margin-bottom: 20px; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px; }
         .kpi { display: inline-block; margin: 0 15px; }
         .kpi-title { font-size: 11px; color: #7f8c8d; }
         .kpi-value { font-size: 18px; font-weight: bold; color: #2c3e50; }
+        .kpi-sub { font-size: 10px; color: #6b7280; margin-top: 2px; }
         .content-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .content-table th, .content-table td { border: 1px solid #dddddd; text-align: left; padding: 6px; }
         .content-table th { background-color: #f2f2f2; }
@@ -35,6 +36,32 @@
         <h1>{{TITULO_RELATORIO}}</h1>
     </div>
 
+    {% if INCLUDE_RESUMO_EXECUTIVO %}
+    <h2>Resumo Executivo</h2>
+    <p class="summary-text">Período: <strong>{{EXEC_PERIODO}}</strong> | Meta mensal: <strong>{{EXEC_META_MENSAL}}</strong></p>
+    <div class="summary-box">
+        <div class="kpi">
+            <div class="kpi-title">VENDAS NO PERÍODO</div>
+            <div class="kpi-value">{{VALOR_TOTAL_VENDAS}}</div>
+            <div class="kpi-sub">{{EXEC_VENDAS_YOY_DELTA}}</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-title">ATINGIMENTO DA META (MÊS)</div>
+            <div class="kpi-value">{{EXEC_ATINGIMENTO_META}}</div>
+            <div class="kpi-sub">Meta referência: {{EXEC_META_MENSAL}}</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-title">CLIENTES ÚNICOS</div>
+            <div class="kpi-value">{{EXEC_CLIENTES}}</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-title">VENDAS POR DIA ÚTIL</div>
+            <div class="kpi-value">{{EXEC_VENDAS_DIA_UTIL}}</div>
+            <div class="kpi-sub">Dias úteis no período: {{EXEC_DIAS_UTEIS_PERIODO}}</div>
+        </div>
+    </div>
+    {% endif %}
+
     <h2>Resumo Geral do Período</h2>
     <div class="summary-box">
         <div class="kpi">
@@ -52,9 +79,12 @@
     </div>
 
     <h2>Análise de Vendas</h2>
+    {% if INCLUDE_VENDAS_TEMPO %}
     <h3>Evolução das Vendas no Período</h3>
     <img src="{{GRAFICO_VENDAS_TEMPO_PATH}}" alt="Evolução das Vendas" class="chart">
+    {% endif %}
 
+    {% if INCLUDE_VENDEDORES %}
     <div class="new-page">
         <h2>Análise de Vendedores</h2>
         <h3>Desempenho por Vendedor</h3>
@@ -75,28 +105,34 @@
             </tbody>
         </table>
     </div>
+    {% endif %}
 
+    {% if INCLUDE_CLIENTES %}
     <div class="new-page">
         <h2>Análise de Clientes</h2>
         <h3>Análise de Pareto por Cliente (Top 30)</h3>
         <p class="summary-text">{{TEXTO_RESUMO_PARETO}}</p>
         <img src="{{GRAFICO_PARETO_CLIENTE_PATH}}" alt="Análise de Pareto por Cliente" class="chart">
         
-        <h3>Top 10 Clientes por Valor de Compra</h3>
-        <img src="{{GRAFICO_CLIENTES_PATH}}" alt="Top 10 Clientes" class="chart">
+        <h3>Top 20 Clientes por Valor de Compra</h3>
+        <img src="{{GRAFICO_CLIENTES_PATH}}" alt="Top 20 Clientes" class="chart">
     </div>
+    {% endif %}
 
+    {% if INCLUDE_PRODUTOS %}
     <div class="new-page">
         <h2>Análise de Produtos</h2>
-        <h3>Top 10 Produtos por Valor de Venda (R$)</h3>
-        <img src="{{GRAFICO_PRODUTOS_VALOR_PATH}}" alt="Top 10 Produtos por Valor" class="chart">
+        <h3>Top 20 Produtos por Valor de Venda (R$)</h3>
+        <img src="{{GRAFICO_PRODUTOS_VALOR_PATH}}" alt="Top 20 Produtos por Valor" class="chart">
 
-        <h3>Top 10 Produtos por Quantidade Vendida (Unidades)</h3>
-        <img src="{{GRAFICO_PRODUTOS_QTD_PATH}}" alt="Top 10 Produtos por Quantidade" class="chart">
+        <h3>Top 20 Produtos por Quantidade Vendida (Unidades)</h3>
+        <img src="{{GRAFICO_PRODUTOS_QTD_PATH}}" alt="Top 20 Produtos por Quantidade" class="chart">
     </div>
+    {% endif %}
 
     {{SECAO_MAPA_CALOR}}
     
+    {% if INCLUDE_GEO_DETALHADA %}
     <div class="new-page">
         <h2>Análise Geográfica Detalhada</h2>
         <h3>Distribuição Percentual de Vendas por Estado</h3>
@@ -106,6 +142,7 @@
         <h3>Detalhamento de Vendas - Outros Estados</h3>
         {{GRAFICO_OUTROS_ESTADOS_HTML}}
     </div>
+    {% endif %}
 
 </body>
 </html>

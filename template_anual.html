@@ -15,13 +15,30 @@
             border-bottom: 2px solid #3498db; 
             padding-bottom: 5px; 
             margin-top: 30px; 
-            page-break-after: avoid; /* Evita que o título fique órfão no final da página */
+            page-break-after: avoid; /* Compat */
+            break-after: avoid-page; /* WeasyPrint */
         }
-        h3 { font-size: 14px; color: #34495e; margin-top: 20px; }
+        h3 {
+            font-size: 14px;
+            color: #34495e;
+            margin-top: 20px;
+            page-break-after: avoid;
+            break-after: avoid-page;
+        }
         .summary-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         .summary-table td { border: 1px solid #dddddd; text-align: left; padding: 8px; }
         .summary-table td:first-child { font-weight: bold; width: 40%; }
-        .chart { width: 100%; margin-top: 15px; page-break-inside: avoid; }
+        .chart {
+            width: 100%;
+            margin-top: 12px;
+            display: block;
+            page-break-inside: avoid; /* Compat */
+            break-inside: avoid-page; /* WeasyPrint */
+        }
+        .avoid-break {
+            page-break-inside: avoid; /* Compat */
+            break-inside: avoid-page; /* WeasyPrint */
+        }
         .new-page { page-break-before: always; }
         .footer { text-align: center; position: fixed; bottom: -40px; left: 0px; right: 0px; height: 50px; font-size: 10px; color: #95a5a6; }
     </style>
@@ -56,24 +73,59 @@
         </tr>
     </table>
 
+    {% if INCLUDE_EVOLUCAO %}
     <div>
-        <h2>Evolução das Vendas ao Longo do Ano</h2>
-        <img src="{{GRAFICO_EVOLUCAO_MENSAL_PATH}}" alt="Evolução Mensal de Vendas" class="chart">
-        <img src="{{GRAFICO_VENDAS_TRIMESTRAL_PATH}}" alt="Distribuição Trimestral de Vendas" class="chart">
+        <div class="avoid-break">
+            <h2>Evolução das Vendas ao Longo do Ano</h2>
+            <p><strong>Melhor mês:</strong> {{MELHOR_MES_LABEL}} ({{MELHOR_MES_VALOR}}) | <strong>Pior mês:</strong> {{PIOR_MES_LABEL}} ({{PIOR_MES_VALOR}})</p>
+            <img src="{{GRAFICO_EVOLUCAO_MENSAL_PATH}}" alt="Evolução Mensal de Vendas" class="chart">
+        </div>
+        <div class="avoid-break">
+            <img src="{{GRAFICO_VENDAS_TRIMESTRAL_PATH}}" alt="Distribuição Trimestral de Vendas" class="chart">
+        </div>
     </div>
+    {% endif %}
 
+    {% if INCLUDE_PEDIDOS_TICKET %}
+    <div>
+        <div class="avoid-break">
+            <h2>Volume e Ticket Médio</h2>
+            <img src="{{GRAFICO_PEDIDOS_TICKET_MENSAL_PATH}}" alt="Pedidos e Ticket Médio por Mês" class="chart">
+        </div>
+    </div>
+    {% endif %}
+
+    {% if INCLUDE_VENDEDORES or INCLUDE_UF %}
+    <div class="new-page">
+        <h2>Análise Comercial</h2>
+        {% if INCLUDE_VENDEDORES %}
+        <h3>Vendas por Vendedor</h3>
+        <img src="{{GRAFICO_VENDAS_POR_VENDEDOR_PATH}}" alt="Vendas por Vendedor" class="chart">
+        {% endif %}
+
+        {% if INCLUDE_UF %}
+        <h3>Vendas por UF</h3>
+        <img src="{{GRAFICO_VENDAS_POR_UF_PATH}}" alt="Vendas por UF" class="chart">
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if INCLUDE_RANK_PRODUTOS %}
     <div class="new-page">
         <h2>Rankings Anuais</h2>
-        <h3>Top 10 Produtos do Ano (por Valor de Venda)</h3>
-        <img src="{{GRAFICO_TOP_PRODUTOS_PATH}}" alt="Top 10 Produtos por Valor" class="chart">
-        <h3>Top 10 Produtos do Ano (por Quantidade Vendida)</h3>
-        <img src="{{GRAFICO_TOP_PRODUTOS_QTD_ANUAL_PATH}}" alt="Top 10 Produtos por Quantidade" class="chart">
+        <h3>Top 20 Produtos do Ano (por Valor de Venda)</h3>
+        <img src="{{GRAFICO_TOP_PRODUTOS_PATH}}" alt="Top 20 Produtos por Valor" class="chart">
+        <h3>Top 20 Produtos do Ano (por Quantidade Vendida)</h3>
+        <img src="{{GRAFICO_TOP_PRODUTOS_QTD_ANUAL_PATH}}" alt="Top 20 Produtos por Quantidade" class="chart">
     </div>
+    {% endif %}
 
+    {% if INCLUDE_RANK_CLIENTES %}
     <div class="new-page">
-        <h3>Top 10 Clientes do Ano (por Valor de Compra)</h3>
-        <img src="{{GRAFICO_TOP_CLIENTES_PATH}}" alt="Top 10 Clientes" class="chart">
+        <h3>Top 20 Clientes do Ano (por Valor de Compra)</h3>
+        <img src="{{GRAFICO_TOP_CLIENTES_PATH}}" alt="Top 20 Clientes" class="chart">
     </div>
+    {% endif %}
 
 </body>
 </html>

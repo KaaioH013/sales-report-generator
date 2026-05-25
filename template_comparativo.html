@@ -63,22 +63,29 @@
         </tbody>
     </table>
 
+    {% if INCLUDE_COMP_VENDEDOR %}
     <div class="new-page">
         <h2>Análises Comparativas Gráficas</h2>
         <h3>Comparativo de Vendas por Vendedor</h3>
         <img src="{{GRAFICO_COMP_VENDEDOR_PATH}}" alt="Comparativo de Vendas por Vendedor" class="chart">
     </div>
+    {% endif %}
 
+    {% if INCLUDE_COMP_PRODUTOS %}
     <div class="new-page">
-        <h3>Comparativo de Top 10 Produtos</h3>
-        <img src="{{GRAFICO_COMP_PRODUTO_PATH}}" alt="Comparativo de Top 10 Produtos" class="chart">
+        <h3>Comparativo de Top 20 Produtos</h3>
+        <img src="{{GRAFICO_COMP_PRODUTO_PATH}}" alt="Comparativo de Top 20 Produtos" class="chart">
     </div>
+    {% endif %}
     
+    {% if INCLUDE_COMP_CLIENTES %}
     <div class="new-page">
-        <h3>Comparativo de Top 10 Clientes</h3>
-        <img src="{{GRAFICO_COMP_CLIENTE_PATH}}" alt="Comparativo de Top 10 Clientes" class="chart">
+        <h3>Comparativo de Top 20 Clientes</h3>
+        <img src="{{GRAFICO_COMP_CLIENTE_PATH}}" alt="Comparativo de Top 20 Clientes" class="chart">
     </div>
+    {% endif %}
     
+    {% if INCLUDE_CHURN %}
     <div class="new-page">
         <h2>Alerta de Clientes Inativos (Churn)</h2>
         <p>Clientes que compraram em <strong>{{LABEL_A}}</strong> mas não compraram em <strong>{{LABEL_B}}</strong> (Top 15 por valor em A).</p>
@@ -94,6 +101,7 @@
             </tbody>
         </table>
     </div>
+    {% endif %}
 
 </body>
 </html>

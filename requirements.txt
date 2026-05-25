@@ -11,8 +11,10 @@ geobr==0.2.2
 geopandas==1.1.0
 html5lib==1.1
 idna==3.10
+Jinja2==3.1.6
 kiwisolver==1.4.9
 lxml==5.4.0
+MarkupSafe==3.0.2
 matplotlib==3.10.6
 numpy==2.3.3
 openpyxl==3.1.5
@@ -33,7 +35,7 @@ shapely==2.1.0
 six==1.17.0
 tinycss2==1.4.0
 tinyhtml5==2.0.0
-ttkthemes==3.2.2
+customtkinter==5.2.2
 tzdata==2025.2
 urllib3==2.5.0
 weasyprint==66.0

@@ -1,6 +1,9 @@
 -r requirements.txt
+# PyInstaller 6.x + altgraph ainda importam pkg_resources (removido no setuptools 82+).
+setuptools>=70,<82
 altgraph==0.17.4
 pefile==2023.2.7
 pyinstaller==6.16.0
 pyinstaller-hooks-contrib==2025.8
+pytest>=8.3,<10
 pywin32-ctypes==0.2.3
