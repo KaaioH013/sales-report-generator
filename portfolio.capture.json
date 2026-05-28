@@ -1,0 +1,12 @@
+{
+  "viewport": { "width": 1100, "height": 900 },
+  "deviceScaleFactor": 2,
+  "shots": [
+    {
+      "name": "01-relatorio-periodo-demo",
+      "filePath": "docs/portfolio/demo-relatorio-periodo.html",
+      "selector": "body",
+      "waitMs": 400
+    }
+  ]
+}

@@ -69,6 +69,39 @@ except locale.Error:
     except locale.Error:
         print("AVISO: Locale pt_BR não encontrado.")
 
+def _project_root():
+    return pathlib.Path(__file__).resolve().parent
+
+
+def _load_dotenv():
+    env_file = _project_root() / '.env'
+    if not env_file.is_file():
+        return
+    try:
+        for raw in env_file.read_text(encoding='utf-8').splitlines():
+            line = raw.strip()
+            if not line or line.startswith('#') or '=' not in line:
+                continue
+            key, _, value = line.partition('=')
+            os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
+    except Exception:
+        pass
+
+
+_load_dotenv()
+
+
+def _app_config_dir_name():
+    return os.environ.get('APP_CONFIG_DIR', 'sales_report_generator')
+
+
+def _monthly_sales_target():
+    try:
+        return float(os.environ.get('MONTHLY_SALES_TARGET', '1000000'))
+    except ValueError:
+        return 1000000.0
+
+
 def resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
@@ -76,7 +109,7 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
 
-APP_NAME = "Gerador de Relatórios"
+APP_NAME = "Sales Report Generator"
 __version__ = "21.0"
 
 
@@ -146,7 +179,7 @@ def get_default_backups_dir(project_root=None):
     if _is_writable_dir(preferred):
         return preferred
 
-    fallback = os.path.join(os.environ.get('APPDATA', project_root), 'relatorios_2026', 'backups')
+    fallback = os.path.join(os.environ.get('APPDATA', project_root), _app_config_dir_name(), 'backups')
     _ensure_dir(fallback)
     return fallback
 
@@ -221,7 +254,7 @@ def create_project_backup_zip(*, project_root=None, backups_dir=None, keep_last=
         git_info_lines.append('Git            : unavailable')
 
     # Settings export (se existir)
-    settings_path = os.path.join(os.environ.get('APPDATA', ''), 'relatorios_2026', 'settings.json')
+    settings_path = os.path.join(os.environ.get('APPDATA', ''), _app_config_dir_name(), 'settings.json')
 
     with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED) as zf:
         zf.writestr('git_info.txt', "\n".join(git_info_lines) + "\n")
@@ -583,7 +616,7 @@ class TimingCollector:
 
 def _get_settings_path():
     appdata = os.environ.get('APPDATA') or os.path.expanduser('~')
-    pasta = os.path.join(appdata, 'relatorios_2026')
+    pasta = os.path.join(appdata, _app_config_dir_name())
     os.makedirs(pasta, exist_ok=True)
     return os.path.join(pasta, 'settings.json')
 
@@ -1462,8 +1495,7 @@ def gerar_relatorio_completo(
             except Exception:
                 exec_clientes_str = '-'
 
-            # Meta mensal fixa (informada pelo usuário)
-            meta_mensal = 2530000.0
+            meta_mensal = _monthly_sales_target()
             exec_meta_mensal_str = formatar_moeda_str(meta_mensal)
             exec_ating_meta_str = _fmt_pct_ptbr((total_vendas / meta_mensal) if meta_mensal > 0 else None)
 
