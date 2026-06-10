@@ -32,7 +32,6 @@ build_log*.txt
 build_final.txt
 ui_*_stdout.txt
 ui_*_stderr.txt
-HISTORICO_DO_CHAT*.md
 HANDOFF_PARA_NOVO_CHAT.md
 AI_CONTEXT.md
 
