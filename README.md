@@ -8,9 +8,21 @@ App desktop (CustomTkinter) que gera relatórios **PDF/HTML** de vendas a partir
 
 Fechamento comercial em B2B industrial costuma depender de exports do ERP e planilhas manuais. Esta ferramenta lê o Excel, calcula KPIs (Pareto, mapa por UF, YoY, qualidade de dados) e entrega relatório pronto para reunião — sem depender de BI para rotinas mensais.
 
-## Screenshot
+## Prévia ilustrativa
 
-![App](screenshots/01-relatorio-periodo-demo.png)
+![Prévia ilustrativa de relatório com dados fictícios](screenshots/01-relatorio-periodo-demo.png)
+
+Esta imagem é uma demonstração visual produzida a partir de `docs/portfolio/demo-relatorio-periodo.html`. Não é uma captura do aplicativo desktop em execução. Os valores são fictícios.
+
+## Como avaliar o projeto
+
+1. Execute a aplicação seguindo as instruções abaixo.
+2. Abra `data/sample_data.xlsx` na aba **Relatório de Período**.
+3. Explore a geração de relatórios e as opções de comparação e qualidade dos dados.
+
+**Competências demonstradas:** tratamento de dados com pandas, indicadores comerciais, interface desktop e geração de documentos em PDF/HTML.
+
+[← Voltar ao portfólio](https://github.com/KaaioH013)
 
 ## Stack
 
